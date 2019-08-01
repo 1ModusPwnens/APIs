@@ -18,6 +18,7 @@ def puppiesFunction():
 #Make another app.route() decorator here that takes in an integer id in the 
 app.route('/puppies/<int:id>', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def puppiesFunctionId(id):
+  print id
   if request.method == 'GET':
   	#Call the method to get a specific puppy based on their id
     return getPuppy(id)
