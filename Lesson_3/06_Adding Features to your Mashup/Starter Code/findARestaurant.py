@@ -4,12 +4,13 @@ import httplib2
 
 import sys
 import codecs
+from credentials import FOURSQUARE_CLIENT_ID, FOURSQUARE_CLIENT_SECRET, GOOGLE_API_KEY
 sys.stdout = codecs.getwriter('utf8')(sys.stdout)
 sys.stderr = codecs.getwriter('utf8')(sys.stderr)
 
-foursquare_client_id = '<CLIENT_ID>'
-foursquare_client_secret = '<CLIENT_SECRET>'
-google_api_key = '<API_KEY>'
+foursquare_client_id = FOURSQUARE_CLIENT_ID
+foursquare_client_secret = FOURSQUARE_CLIENT_SECRET
+google_api_key = GOOGLE_API_KEY
 
 def getGeocodeLocation(inputString):
     #Replace Spaces with '+' in URL

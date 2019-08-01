@@ -10,15 +10,6 @@ import codecs
 sys.stdout = codecs.getwriter('utf8')(sys.stdout)
 sys.stderr = codecs.getwriter('utf8')(sys.stderr)
 
-
-
-
-#foursquare_client_id = ''
-
-#foursquare_client_secret = ''
-
-#google_api_key = ''
-
 engine = create_engine('sqlite:///restaurants.db')
 
 Base.metadata.bind = engine
@@ -28,15 +19,21 @@ app = Flask(__name__)
 
 @app.route('/restaurants', methods = ['GET', 'POST'])
 def all_restaurants_handler():
-  #YOUR CODE HERE
-    
+	if request.method == 'POST':
+		cityName = request.args.get('cityName', 'Reno+Nevada')
+		mealType = request.args.get('mealType', 'oysters')
+
+		restaurant_data = findARestaurant(mealType, cityName)
+		restaurant = Restaurant(restaurant_name=restaurant_data['name'], restaurant_address=restaurant_data['address'], restaurant_image=restaurant_data['image'])
+
+		session.add(restaurant)
+		session.commit()
+		return jsonify(Restaurant=restaurant.serialize)
+	
 @app.route('/restaurants/<int:id>', methods = ['GET','PUT', 'DELETE'])
 def restaurant_handler(id):
-  #YOUR CODE HERE
+	#YOUR CODE HERE
 
 if __name__ == '__main__':
-    app.debug = True
-    app.run(host='0.0.0.0', port=5000)
-
-
-  
+	app.debug = True
+	app.run(host='0.0.0.0', port=5000)
