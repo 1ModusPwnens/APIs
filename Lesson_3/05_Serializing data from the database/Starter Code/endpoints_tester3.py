@@ -16,6 +16,7 @@ try:
 	h = httplib2.Http()
 	resp, result = h.request(url, 'POST')
 	obj = json.loads(result)
+	print "see me?"
 	puppyID = obj['Puppy']['id']
 	if resp['status'] != '200':
 		raise Exception('Received an unsuccessful status code of %s' % resp['status'])
