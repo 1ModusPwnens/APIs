@@ -32,7 +32,7 @@ def all_restaurants_handler():
 	
 @app.route('/restaurants/<int:id>', methods = ['GET','PUT', 'DELETE'])
 def restaurant_handler(id):
-	#YOUR CODE HERE
+	pass
 
 if __name__ == '__main__':
 	app.debug = True
