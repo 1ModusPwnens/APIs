@@ -13,10 +13,11 @@ sys.stderr = codecs.getwriter('utf8')(sys.stderr)
 engine = create_engine('sqlite:///restaurants.db')
 
 Base.metadata.bind = engine
-DBSession = sessionmaker(bind=engine)
-session = DBSession()
+#DBSession = sessionmaker(bind=engine)
+#session = DBSession()
 app = Flask(__name__)
 
+@start_session
 @app.route('/restaurants', methods = ['GET', 'POST'])
 def all_restaurants_handler():
 	if request.method == 'POST':
@@ -33,6 +34,14 @@ def all_restaurants_handler():
 @app.route('/restaurants/<int:id>', methods = ['GET','PUT', 'DELETE'])
 def restaurant_handler(id):
 	pass
+
+
+def start_session(f):
+	def wrapper():
+		DBSession = sessionmaker(bind=engine)
+		session = DBSession()
+		return f()
+	return wrapper
 
 if __name__ == '__main__':
 	app.debug = True
