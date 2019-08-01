@@ -17,6 +17,15 @@ Base.metadata.bind = engine
 #session = DBSession()
 app = Flask(__name__)
 
+
+def start_session(f):
+	def wrapper():
+		DBSession = sessionmaker(bind=engine)
+		session = DBSession()
+		return f()
+	return wrapper
+
+
 @start_session
 @app.route('/restaurants', methods = ['GET', 'POST'])
 def all_restaurants_handler():
@@ -34,14 +43,6 @@ def all_restaurants_handler():
 @app.route('/restaurants/<int:id>', methods = ['GET','PUT', 'DELETE'])
 def restaurant_handler(id):
 	pass
-
-
-def start_session(f):
-	def wrapper():
-		DBSession = sessionmaker(bind=engine)
-		session = DBSession()
-		return f()
-	return wrapper
 
 if __name__ == '__main__':
 	app.debug = True
