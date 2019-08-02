@@ -16,7 +16,7 @@ class SessionManager:
 		Base.metadata.bind = self.engine
 
 	@property
-	def session():
+	def session(self):
 		s = sessionmaker(bind=self.engine)
 		return s()
 
