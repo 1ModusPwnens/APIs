@@ -10,15 +10,6 @@ import codecs
 sys.stdout = codecs.getwriter('utf8')(sys.stdout)
 sys.stderr = codecs.getwriter('utf8')(sys.stderr)
 
-manager = SessionManager()
-
-#engine = create_engine('sqlite:///restaurants.db')
-
-#Base.metadata.bind = engine
-#DBSession = sessionmaker(bind=engine)
-#session = DBSession()
-app = Flask(__name__)
-
 class SessionManager:
 	def __init__(self):
 		self.engine = create_engine('sqlite:///restaurants.db')
@@ -28,6 +19,16 @@ class SessionManager:
 	def session():
 		s = sessionmaker(bind=self.engine)
 		return s()
+
+
+manager = SessionManager()
+app = Flask(__name__)
+
+#engine = create_engine('sqlite:///restaurants.db')
+
+#Base.metadata.bind = engine
+#DBSession = sessionmaker(bind=engine)
+#session = DBSession()
 
 @app.route('/restaurants', methods = ['GET', 'POST'])
 def all_restaurants_handler():
