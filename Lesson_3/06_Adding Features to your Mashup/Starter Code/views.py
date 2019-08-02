@@ -10,24 +10,25 @@ import codecs
 sys.stdout = codecs.getwriter('utf8')(sys.stdout)
 sys.stderr = codecs.getwriter('utf8')(sys.stderr)
 
-engine = create_engine('sqlite:///restaurants.db')
+manager = SessionManager()
 
-Base.metadata.bind = engine
-DBSession = sessionmaker(bind=engine)
-session = DBSession()
+#engine = create_engine('sqlite:///restaurants.db')
+
+#Base.metadata.bind = engine
+#DBSession = sessionmaker(bind=engine)
+#session = DBSession()
 app = Flask(__name__)
 
+class SessionManager:
+	def __init__(self):
+		self.engine = create_engine('sqlite:///restaurants.db')
+		Base.metadata.bind = self.engine
 
-def start_session(f):
-	def wrapper():
-		global session
-		DBSession = sessionmaker(bind=engine)
-		session = DBSession()
-		return f()
-	return wrapper
+	@property
+	def session():
+		s = sessionmaker(bind=self.engine)
+		return s()
 
-
-@start_session
 @app.route('/restaurants', methods = ['GET', 'POST'])
 def all_restaurants_handler():
 	if request.method == 'POST':
@@ -37,6 +38,7 @@ def all_restaurants_handler():
 		restaurant_data = findARestaurant(mealType, cityName)
 		restaurant = Restaurant(restaurant_name=restaurant_data['name'], restaurant_address=restaurant_data['address'], restaurant_image=restaurant_data['image'])
 
+		session = manager.session
 		session.add(restaurant)
 		session.commit()
 		return jsonify(Restaurant=restaurant.serialize)
