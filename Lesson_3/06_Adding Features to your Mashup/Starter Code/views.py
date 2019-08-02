@@ -32,6 +32,7 @@ app = Flask(__name__)
 
 @app.route('/restaurants', methods = ['GET', 'POST'])
 def all_restaurants_handler():
+	session = manager.session
 	if request.method == 'POST':
 		cityName = request.args.get('cityName', 'Reno+Nevada')
 		mealType = request.args.get('mealType', 'oysters')
@@ -39,20 +40,38 @@ def all_restaurants_handler():
 		restaurant_data = findARestaurant(mealType, cityName)
 		restaurant = Restaurant(restaurant_name=restaurant_data['name'], restaurant_address=restaurant_data['address'], restaurant_image=restaurant_data['image'])
 
-		session = manager.session
 		session.add(restaurant)
 		session.commit()
 		return jsonify(Restaurant=restaurant.serialize)
 
 	if request.method == 'GET':
-		session = manager.session
 		restaurants = session.query(Restaurant).all()
 		return jsonify([r.serialize for r in restaurants])
 
 	
 @app.route('/restaurants/<int:id>', methods = ['GET','PUT', 'DELETE'])
 def restaurant_handler(id):
-	pass
+	session = manager.session
+	if request.method == 'GET':
+		restaurant = session.query(Restaurant).filter_by(id = id).one()
+		return jsonify(restaurant.serialize)
+
+	if request.method == 'PUT':
+		name = request.args.get('name', '')
+		address = request.args.get('address', '')
+		img = request.args.get('image', '')
+
+		restaurant = session.query(Restaurant).filter_by(id = id).one()
+		restaurant.restaurant_name = name
+		restaurant.restaurant_address = address
+		restaurant.restaurant_image = img
+		session.add(restaurant)
+		session.commit()
+
+	if request.method == 'DELETE':
+		restaurant = session.query(Restaurant).filter_by(id = id).one()
+		session.delete(restaurant)
+		session.commit()
 
 if __name__ == '__main__':
 	app.debug = True
