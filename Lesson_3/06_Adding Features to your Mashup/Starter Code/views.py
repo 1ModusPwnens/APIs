@@ -46,7 +46,7 @@ def all_restaurants_handler():
 
 	if request.method == 'GET':
 		restaurants = session.query(Restaurant).all()
-		return jsonify([r.serialize for r in restaurants])
+		return jsonify(Restaurants=[r.serialize for r in restaurants])
 
 	
 @app.route('/restaurants/<int:id>', methods = ['GET','PUT', 'DELETE'])

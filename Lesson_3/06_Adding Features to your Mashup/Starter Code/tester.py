@@ -78,7 +78,6 @@ else:
 	try:
 		print "Attempting Test 3: Reading the last created restaurant..."
 		result = all_result
-		print result
 		restID = result['restaurants'][len(result['restaurants'])-1]['id']
 
 		url = address + "/restaurants/%s" % restID
