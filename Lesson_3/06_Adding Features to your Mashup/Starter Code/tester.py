@@ -97,7 +97,9 @@ else:
 	try:
 		print "Attempting Test 4: Changing the name, image, and address of the first restaurant to Udacity..."
 		result = all_result
+		print "BEFORE RETRIEVE ID"
 		restID = result['restaurants'][0]['id']
+		print "AFTER RETRIEVE ID"
 		url = address + "/restaurants/%s?name=Udacity&address=2465+Latham+Street+Mountain+View+CA&image=https://media.glassdoor.com/l/70/82/fc/e8/students-first.jpg" % restID
 		h = httplib2.Http()
 		resp, result = h.request(url,'PUT')
