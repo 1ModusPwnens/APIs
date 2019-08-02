@@ -13,13 +13,14 @@ sys.stderr = codecs.getwriter('utf8')(sys.stderr)
 engine = create_engine('sqlite:///restaurants.db')
 
 Base.metadata.bind = engine
-#DBSession = sessionmaker(bind=engine)
-#session = DBSession()
+DBSession = sessionmaker(bind=engine)
+session = DBSession()
 app = Flask(__name__)
 
 
 def start_session(f):
 	def wrapper():
+		global session
 		DBSession = sessionmaker(bind=engine)
 		session = DBSession()
 		return f()
