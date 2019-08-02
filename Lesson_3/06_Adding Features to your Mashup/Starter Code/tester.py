@@ -79,7 +79,6 @@ else:
 		print "Attempting Test 3: Reading the last created restaurant..."
 		result = all_result
 		restID = result['restaurants'][len(result['restaurants'])-1]['id']
-
 		url = address + "/restaurants/%s" % restID
 		h = httplib2.Http()
 		resp, result = h.request(url,'GET')
