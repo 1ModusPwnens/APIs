@@ -76,7 +76,7 @@ else:
 	print "Test 2 PASS: Succesfully read all restaurants"
 #TEST THREE -- READ A SPECIFIC RESTAURANT
 	try:
-		print "Attempting Test 3: Reading the last created restaurant..."
+		print "Attempting Test 3: Reading the last created restaurant... :P"
 		result = all_result
 		restID = result['restaurants'][len(result['restaurants'])-1]['id']
 		print "restID: %s" % restID
