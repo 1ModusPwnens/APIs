@@ -76,8 +76,9 @@ else:
 	print "Test 2 PASS: Succesfully read all restaurants"
 #TEST THREE -- READ A SPECIFIC RESTAURANT
 	try:
-		print "Attempting Test 3: Reading the last created restaurant... :P"
+		print "Attempting Test 3: Reading the last created restaurant..."
 		result = all_result
+		print "See Me?"
 		restID = result['restaurants'][len(result['restaurants'])-1]['id']
 		print "restID: %s" % restID
 		url = address + "/restaurants/%s" % restID
