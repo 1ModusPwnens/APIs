@@ -81,6 +81,7 @@ else:
 		restID = result['restaurants'][len(result['restaurants'])-1]['id']
 		url = address + "/restaurants/%s" % restID
 		h = httplib2.Http()
+		print h.request(url, 'GET')
 		resp, result = h.request(url,'GET')
 		if resp['status'] != '200':
 			raise Exception('Received an unsuccessful status code of %s' % resp['status'])
