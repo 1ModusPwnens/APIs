@@ -67,7 +67,8 @@ def restaurant_handler(id):
 		restaurant.restaurant_image = img
 		session.add(restaurant)
 		session.commit()
-		return "Updated Restaurant with id %s" % id
+		# return "Updated Restaurant with id %s" % id
+		return jsonify(restaurant=restaurant.serialize)
 
 	if request.method == 'DELETE':
 		restaurant = session.query(Restaurant).filter_by(id = id).one()

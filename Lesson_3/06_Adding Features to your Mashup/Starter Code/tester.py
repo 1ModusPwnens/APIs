@@ -95,9 +95,6 @@ else:
 
 #TEST FOUR -- UPDATE A SPECIFIC RESTAURANT
 	try:
-		import pdb
-		pdb.set_trace()
-		
 		print "Attempting Test 4: Changing the name, image, and address of the first restaurant to Udacity..."
 		result = all_result
 		restID = result['restaurants'][0]['id']
