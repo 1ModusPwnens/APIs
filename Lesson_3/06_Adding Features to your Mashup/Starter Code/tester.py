@@ -52,8 +52,8 @@ try:
 
 except Exception as err:
 	print "Test 1 FAILED: Could not add new restaurants"
-	print err
 	print err.args
+	import pdb; pdb.set_trace()
 	sys.exit()
 else:
 	print "Test 1 PASS: Succesfully Made all new restaurants"
