@@ -53,7 +53,6 @@ try:
 except Exception as err:
 	print "Test 1 FAILED: Could not add new restaurants"
 	print err.args
-	import pdb; pdb.set_trace()
 	sys.exit()
 else:
 	print "Test 1 PASS: Succesfully Made all new restaurants"
@@ -96,6 +95,9 @@ else:
 
 #TEST FOUR -- UPDATE A SPECIFIC RESTAURANT
 	try:
+		import pdb
+		pdb.set_trace()
+		
 		print "Attempting Test 4: Changing the name, image, and address of the first restaurant to Udacity..."
 		result = all_result
 		restID = result['restaurants'][0]['id']
