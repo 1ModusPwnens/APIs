@@ -52,6 +52,7 @@ try:
 
 except Exception as err:
 	print "Test 1 FAILED: Could not add new restaurants"
+	print err
 	print err.args
 	sys.exit()
 else:
