@@ -18,6 +18,7 @@ app = Flask(__name__)
 @auth.verify_password
 def verify_password(username, password):
     session = DBSession()
+
     user = session.query(User).filter_by(username=username).first()
     if not user or not user.verify_password(password):
         return False
@@ -26,6 +27,8 @@ def verify_password(username, password):
 
 @app.route('/users', methods=['POST'])
 def new_user():
+    session = DBSession()
+
     username = request.json.get('username')
     password = request.json.get('password')
     if not username or not password:
@@ -35,8 +38,6 @@ def new_user():
 
     user = User(username=username)
     user.hash_password(password)
-
-    session = DBSession()
     session.add(user)
     session.commit()
     return jsonify({'username': username}), 201
@@ -44,6 +45,8 @@ def new_user():
 @app.route('/bagels', methods = ['GET','POST'])
 @auth.login_required
 def showAllBagels():
+    session = DBSession()
+    
     if request.method == 'GET':
         bagels = session.query(Bagel).all()
         return jsonify(bagels = [bagel.serialize for bagel in bagels])
@@ -53,8 +56,6 @@ def showAllBagels():
         picture = request.json.get('picture')
         price = request.json.get('price')
         newBagel = Bagel(name = name, description = description, picture = picture, price = price)
-
-        session = DBSession()
         session.add(newBagel)
         session.commit()
         return jsonify(newBagel.serialize)
