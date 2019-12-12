@@ -34,8 +34,10 @@ def new_user():
     if not username or not password:
         print("No username or password provided")
         abort(400)
-    if session.query(User).filter_by(username=username).first() is not None:
-        print("user already exists")
+
+    user = session.query(User).filter_by(username=username).first()
+    if user is not None:
+        print("user already exists: ", user.username)
         abort(400) # user already exists
 
     user = User(username=username)
