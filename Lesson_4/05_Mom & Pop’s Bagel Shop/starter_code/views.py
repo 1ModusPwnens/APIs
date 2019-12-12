@@ -12,11 +12,12 @@ engine = create_engine('sqlite:///bagelShop.db')
 
 Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
-session = DBSession()
+#session = DBSession()
 app = Flask(__name__)
 
 @auth.verify_password
 def verify_password(username, password):
+    session = DBSession()
     user = session.query(User).filter_by(username=username).first()
     if not user or not user.verify_password(password):
         return False
@@ -34,6 +35,8 @@ def new_user():
 
     user = User(username=username)
     user.hash_password(password)
+
+    session = DBSession()
     session.add(user)
     session.commit()
     return jsonify({'username': username}), 201
@@ -50,6 +53,8 @@ def showAllBagels():
         picture = request.json.get('picture')
         price = request.json.get('price')
         newBagel = Bagel(name = name, description = description, picture = picture, price = price)
+
+        session = DBSession()
         session.add(newBagel)
         session.commit()
         return jsonify(newBagel.serialize)
