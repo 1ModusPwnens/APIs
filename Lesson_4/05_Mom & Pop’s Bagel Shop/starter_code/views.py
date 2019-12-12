@@ -39,7 +39,7 @@ def new_user():
     return jsonify({'username': username}), 201
 
 @app.route('/bagels', methods = ['GET','POST'])
-@app.auth.login_required
+@auth.login_required
 def showAllBagels():
     if request.method == 'GET':
         bagels = session.query(Bagel).all()
