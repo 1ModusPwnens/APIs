@@ -32,8 +32,10 @@ def new_user():
     username = request.json.get('username')
     password = request.json.get('password')
     if not username or not password:
+        print("No username or password provided")
         abort(400)
     if session.query(User).filter_by(username=username).first() is not None:
+        print("user already exists")
         abort(400) # user already exists
 
     user = User(username=username)
@@ -46,7 +48,7 @@ def new_user():
 @auth.login_required
 def showAllBagels():
     session = DBSession()
-    
+
     if request.method == 'GET':
         bagels = session.query(Bagel).all()
         return jsonify(bagels = [bagel.serialize for bagel in bagels])
